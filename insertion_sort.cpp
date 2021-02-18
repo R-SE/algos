@@ -8,7 +8,7 @@ void print_nums(int nums[], int length) {
 }
 
 void insertion_sort(int nums[], int length, bool descending = false) {
-  
+
   for (int i = 1; i < length; i++) {
     int key = nums[i];
     int j = i - 1;
