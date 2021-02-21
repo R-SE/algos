@@ -93,3 +93,21 @@ That would be 9 (> 7, and whose neighbor is 3, and 3 < 7). 7 Can then be inserte
         ^         ^            5 + 26 = 31, return their indices
 ```
 
+**Problem 2-1**:
+
+**a.** Any insertion sort can be done in $n^2$ time in the worst case, where $n$ is the number of elements to be sorted. If There are $n/k$ sublists, and each has length $k$, then each can be done in $k^2$ time, resulting in $nk$ time overall when multiplied (if each sublist ends up being worst case).
+
+**b.** We arrive at $nlog(n/k)$ time for merging because we must traverse through each sublist linearly. At each level, the sublist size grows by a factor of 2, but the number of sublists shrinks by a factor of two, so the work done to merge at each level will always be $n$. Next we determine the number of levels, which trends logarithmically with the total size (and taking into account that the base case is no longer an array of size 1, but rather an array of size k, so the argument to the log function is not $n/1$ but rather $n/k$). Total work is work per level multiplied by total levels, so we arrive at $nlog(n/k)$.
+```
+[1, 5]   [9]    [2]   [6, 10]   [3, 7]  [11]   [4]   [8, 12]   -> n/k lists, each doing k work
+    \   /        \      /          \     /       \     /
+[1, 5, 9]       [2, 6, 10]       [3, 7, 11]       [4, 8, 12]   -> n/k * 1/2 lists, each doing 2 * k work
+      \             /                 \               /
+      [1, 2, 5, 6, 9, 10]             [3, 4, 7, 8, 11, 12]  -> n/k * 1/2 * 1/2 lists, each doing 2 * 2 * k work
+              \                               /
+              [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+
+```
+**c.** Solve for $nk + nlog(n/k) - nlogn <= 0$ to get the point at which the modified function is equivalent or superior to the standard merge sort.
+
+**d.** Given a value for $n$, we can use the equation from part c to determine a value for k.
