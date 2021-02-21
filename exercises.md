@@ -64,3 +64,32 @@
 
 **2.3-3:** TODO
 
+**2.3-4:** The worst-case scenario for insertion sort as a recursive procedure is if the array were in decreasing order to start, e.g. [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]. In that case, every time n is appended to the end of the 0 to n - 1 sequence, it must travel up all the way to the front, causing n - 1 swaps. Because the base case is an array of one element (sorted by definition), we've maximized the amount of work done in every recursive call.
+
+**2.3-5:** See *binary_search.cpp* for binary search.
+
+**2.3-6:** Yes, because we already know that if we're at value n, then 0 to n - 1 is already sorted, so we can binary search it for a number that's greater than the value at n, AND either has no number before it or has a number before it that's less than the value at n, like so:
+
+```
+The first 6 numbers are before our current value 7, so we know they've already been sorted.
+Do a binary search through that set, for a number that matches the description above.
+That would be 9 (> 7, and whose neighbor is 3, and 3 < 7). 7 Can then be inserted between 3 and 9.
+[-4, 0, 3, 9, 20, 33 ... **7**, 49, 3, -7, 2]
+          ^                 
+```
+
+**2.3-7:** We can use $nlogn$ time sorting if the numbers are not already sorted. For the search step, we can use $nlogn$ time to go through the array linearly, and for each element, do a binary search for its corresponding pair. Or better, we can do the search step in O(n) by using two pointers that begin at the ends of the array and slide inwards depending on whether the sum of the currently pointed-at numbers is greater or less than the value we're seeking. Illustrated below:
+```
+[-7  1  5  8  13  26  33], 31
+  ^                    ^       -7 + 33 = 26, 26 < 31, so move left pointer right
+
+[-7  1  5  8  13  26  33]
+     ^                 ^       1 + 33 = 34, 34 > 31, so move right pointer left
+
+[-7  1  5  8  13  26  33]
+     ^            ^            1 + 26 = 27, 27 < 31, so move left pointer right
+
+[-7  1  5  8  13  26  33]
+        ^         ^            5 + 26 = 31, return their indices
+```
+
