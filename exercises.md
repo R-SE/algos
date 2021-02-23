@@ -111,3 +111,15 @@ That would be 9 (> 7, and whose neighbor is 3, and 3 < 7). 7 Can then be inserte
 **c.** Solve for $nk + nlog(n/k) - nlogn <= 0$ to get the point at which the modified function is equivalent or superior to the standard merge sort.
 
 **d.** Given a value for $n$, we can use the equation from part c to determine a value for k.
+
+**Problem 2-2**:
+
+**a.** We should prove that there are two subarrays, one sorted and the other unsorted, and the sorted one grows over time while the unsorted one shrinks.
+
+**b/c.** Given the bubblesort implementation in the book (sorted numbers at the front), the three phases of the loop invariant are as such:
+
+1. **Initialization:** There are two subsets, one from 0 to i containing the sorted subset, and from i + 1 to the end containing the unsorted subset. Since i begins at 0, the sorted subset is 0 length, while the unsorted subset is the entire array.
+2. **Maintenance:** After every iteration of i, the smallest number is bubbled to the front. The sorted subset grows by one element. Our invariant (which states that 0 to i contains the sorted set and i + 1 to end contains the unsorted subset) stays true.
+3. **Termination:** The loop terminates after i has reached the last item. Since every smaller element has been bubbled left, the last item must be the largest, and completes the sorted subset.
+
+**d.** The worst-case running time of bubblesort is $O(n^2)$, if it's in descending order. The best case is $O(n)$, if we have a check that allows for early return (see bubble_sort.cpp bubble_sort_backwards_with_check), because we can do $n - 1$ comparisons, and return when we realize they haven't resulted in any swaps. Insertion sort also has $O(n^2)$ worst-case running time, in the same case where the array is in descending order (because every element will have to be swapped all the way up to the first element).
