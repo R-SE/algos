@@ -123,3 +123,20 @@ That would be 9 (> 7, and whose neighbor is 3, and 3 < 7). 7 Can then be inserte
 3. **Termination:** The loop terminates after i has reached the last item. Since every smaller element has been bubbled left, the last item must be the largest, and completes the sorted subset.
 
 **d.** The worst-case running time of bubblesort is $O(n^2)$, if it's in descending order. The best case is $O(n)$, if we have a check that allows for early return (see bubble_sort.cpp bubble_sort_backwards_with_check), because we can do $n - 1$ comparisons, and return when we realize they haven't resulted in any swaps. Insertion sort also has $O(n^2)$ worst-case running time, in the same case where the array is in descending order (because every element will have to be swapped all the way up to the first element).
+
+**Problem 2-3**:
+
+**a.** The runtime is $O(n)$ where n is the number of polynomial terms., because we start from the innermost term, compute the product, and move outwards. We do this $n$ times.
+
+**b.** See *horners_rule.cpp*. Using Horner's Rule is far more efficient because it avoids the problem of having to do the multiplication of calculating exponents (i.e. the last term may be something like x^999, so in the naive polynomial-calculation solution, our program would have to multiply x by itself 999 times, whereas in Horner's Rule solution, there is a constant amount of work done in every term regardless of exponent). The naive solution has $O(n^2)$ runtime, because after the first 2 terms, every term we add will increase the amount of multiplication done by $i$ where $i$ is the index of the term.
+```
+f(x) = 1 + x + x^2 + x^3 + x^4 + x^5 + x^6
+       ^   ^    ^     ^     ^     ^     ^
+       0   1    2     3     4     5     6       units of work
+(each does (i - 1) work for multiplying, and 1 unit of work for adding)
+``` 
+Looking at the pattern above, we have a series sum of n + (n - 1) + (n - 2) + (n -3) + ... + 0, resulting in $n^2/2$ work.
+
+**c.** TODO
+
+**d.** TODO
