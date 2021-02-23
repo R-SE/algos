@@ -140,3 +140,13 @@ Looking at the pattern above, we have a series sum of n + (n - 1) + (n - 2) + (n
 **c.** TODO
 
 **d.** TODO
+
+**Problem 2-4**:
+
+**a.** The inversions in [2, 3, 8, 6, 1] are 2 > 1, 3 > 1, 8 > 6, 8 > 1, 6 > 1.
+
+**b.** To maximize the number of inversions in an array, sort it into descending order. Every element will form an inversion with all the elements that come after it, making the maximum number of possible inversions. The total number of inversions will be the series sum of $n - 1$, or $(n - 1)(n/2)$ total e.g. for [5, 4, 3, 2, 1], there will be 4 + 3 + 2 + 1 = 10 inversions.
+
+**c.** The runtime of of insertion sort is directly proportional to the number of inversions in the input array. Each time two terms are compared and they are an inversion, they must be swapped.
+
+**d.** See *count_inversions.cpp*.
