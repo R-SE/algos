@@ -10,7 +10,7 @@
 
 **1.2-1:** One example of an app that would require algorithms is a meeting scheduler. Given a set number of meeting rooms and a list of meeting times, it would try to determine the optimal way to schedule those meetings so that room utilization is maximized.
 
-**1.2-2:** To determine the breakeven point of the sample runtimes, solve for $8n^2 = 64nlogn$ (approx 43.55). Sample n:
+**1.2-2:** To determine the breakeven point of the sample runtimes, solve for $8n^2 = 64n\log{}n$ (approx 43.55). Sample n:
 
 | n   | insertion sort | merge sort |
 | --- | -------------- | ---------- |
@@ -78,7 +78,7 @@ That would be 9 (> 7, and whose neighbor is 3, and 3 < 7). 7 Can then be inserte
           ^                 
 ```
 
-**2.3-7:** We can use $nlogn$ time sorting if the numbers are not already sorted. For the search step, we can use $nlogn$ time to go through the array linearly, and for each element, do a binary search for its corresponding pair. Or better, we can do the search step in O(n) by using two pointers that begin at the ends of the array and slide inwards depending on whether the sum of the currently pointed-at numbers is greater or less than the value we're seeking. Illustrated below:
+**2.3-7:** We can use $n\log{}n$ time sorting if the numbers are not already sorted. For the search step, we can use $n\log{}n$ time to go through the array linearly, and for each element, do a binary search for its corresponding pair. Or better, we can do the search step in O(n) by using two pointers that begin at the ends of the array and slide inwards depending on whether the sum of the currently pointed-at numbers is greater or less than the value we're seeking. Illustrated below:
 ```
 [-7  1  5  8  13  26  33], 31
   ^                    ^       -7 + 33 = 26, 26 < 31, so move left pointer right
@@ -97,7 +97,7 @@ That would be 9 (> 7, and whose neighbor is 3, and 3 < 7). 7 Can then be inserte
 
 **a.** Any insertion sort can be done in $n^2$ time in the worst case, where $n$ is the number of elements to be sorted. If There are $n/k$ sublists, and each has length $k$, then each can be done in $k^2$ time, resulting in $nk$ time overall when multiplied (if each sublist ends up being worst case).
 
-**b.** We arrive at $nlog(n/k)$ time for merging because we must traverse through each sublist linearly. At each level, the sublist size grows by a factor of 2, but the number of sublists shrinks by a factor of two, so the work done to merge at each level will always be $n$. Next we determine the number of levels, which trends logarithmically with the total size (and taking into account that the base case is no longer an array of size 1, but rather an array of size k, so the argument to the log function is not $n/1$ but rather $n/k$). Total work is work per level multiplied by total levels, so we arrive at $nlog(n/k)$.
+**b.** We arrive at $n\log{}(n/k)$ time for merging because we must traverse through each sublist linearly. At each level, the sublist size grows by a factor of 2, but the number of sublists shrinks by a factor of two, so the work done to merge at each level will always be $n$. Next we determine the number of levels, which trends logarithmically with the total size (and taking into account that the base case is no longer an array of size 1, but rather an array of size k, so the argument to the log function is not $n/1$ but rather $n/k$). Total work is work per level multiplied by total levels, so we arrive at $n\log{}(n/k)$.
 ```
 [1, 5]   [9]    [2]   [6, 10]   [3, 7]  [11]   [4]   [8, 12]   -> n/k lists, each doing k work
     \   /        \      /          \     /       \     /
@@ -108,7 +108,7 @@ That would be 9 (> 7, and whose neighbor is 3, and 3 < 7). 7 Can then be inserte
               [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
 
 ```
-**c.** Solve for $nk + nlog(n/k) - nlogn <= 0$ to get the point at which the modified function is equivalent or superior to the standard merge sort.
+**c.** Solve for $nk + n\log{}(n/k) - n\log{}n <= 0$ to get the point at which the modified function is equivalent or superior to the standard merge sort.
 
 **d.** Given a value for $n$, we can use the equation from part c to determine a value for k.
 
@@ -150,3 +150,19 @@ Looking at the pattern above, we have a series sum of n + (n - 1) + (n - 2) + (n
 **c.** The runtime of of insertion sort is directly proportional to the number of inversions in the input array. Each time two terms are compared and they are an inversion, they must be swapped.
 
 **d.** See *count_inversions.cpp*.
+
+**3.1-1:** $\Theta$-notation of a function states that there exists some function $g(n)$ such that some constants $c_1$ and $c_2$ satisfy $c_1g(n) <= f(n) <= c_2g(n)$. In other words, $f(n)$ is ***within a constant factor of*** $g(n)$. In the expression $max(f(n), g(n))$, we take the greater value, which will be a term of the same order or higher. $\Theta(f(n) + g (n))$ will bound this because it will inevitably match the order of either $f(n)$ or $g(n)$, whichever is greater, and the lesser term will become insignificant as $n\rightarrow\infty$.
+
+**3.1-2:** Because $a$ is constant and $n$ is not, $n$ will grow increasingly large in comparison, so $a$ is an insignificant term. We can also see this when we expand $(n + a)^b$, because we will get a polynomial that has $n^b$ as its most significant term, so it'll bound by $\Theta(n^b)$.
+
+**3.1-3:** The statement is meaningless because $O(n^2)$ describes an upper bound on a function, so by definition, the running time cannot be "at least" or more than $O(n^2)$.
+
+**3.1-4:** No, there doesn't exist a coefficient $c_1$ such that $2^{n+1} <= c_12^n$, because n will grow to infinity. The same applies to $2^{2n} <= c_12^n$.
+
+**3.1-5:** TODO
+
+**3.1-6:** TODO
+
+**3.1-7:** $o(g(n)) > f(n)$ by definition, and also $\omega(g(n)) < f(n)$, so their intersection must be an empty set because $o(g(n))$ is the upper bound for all $c_1(g(n))$ and $\omega(g(n))$ is the lower bound for all $c_2(g(n))$, and there can't be a value of n which can be both greater than the upper bound and lower than the lower bound, because those two sets have no overlap.
+
+**3.1-8:** TODO
