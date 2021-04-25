@@ -1,3 +1,5 @@
+#include "math.h"
+
 int factorial_recursive(int n)
 {
   if (n <= 1)
