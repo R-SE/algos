@@ -9,7 +9,7 @@ int binary_search(std::vector<int> &nums, int target)
 
   while (start <= end)
   {
-    midpoint = start + ((end - start) / 2);
+    midpoint = (start + end) / 2;
     const int value = nums[midpoint];
     if (value == target)
     {
