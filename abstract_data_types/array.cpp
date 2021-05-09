@@ -21,6 +21,12 @@ public:
   int getMax();
   int getSum();
   float getAverage();
+  void reverseAtomic();
+  void reverseInPlace();
+  void leftShift();
+  void rightShift();
+  void leftRotate();
+  void rightRotate();
 
 private:
   int getMinOrMax(bool isMin);
@@ -196,6 +202,80 @@ float Array::getAverage()
   return (float)getSum() / length;
 }
 
+// Reverses the array by allocating a new array,
+// filling it with the elements of the old array in reverse order,
+// deleting the old array, and setting the new array as the stored array.
+// This is so that the entire stored array is overwritten at once,
+// to avoid a situation where we've only swapped part of the array.
+void Array::reverseAtomic()
+{
+  int *newArr = new int[size];
+  for (int i = length - 1; i >= 0; i--)
+  {
+    newArr[length - 1 - i] = a[i];
+  }
+  delete[] a;
+  a = newArr;
+}
+
+// Reverse the array by swapping elements from both ends.
+void Array::reverseInPlace()
+{
+  int p1 = 0;
+  int p2 = length - 1;
+  while (p1 < p2)
+  {
+    int temp = a[p1];
+    a[p1++] = a[p2];
+    a[p2--] = temp;
+  }
+}
+
+// Moves all elements one index to the left and drops the first element.
+void Array::leftShift()
+{
+  for (int i = 0; i < length - 1; i++)
+  {
+    a[i] = a[i + 1];
+  }
+  length--;
+}
+
+// Moves all elements one index to the right and pads array front with a 0.
+void Array::rightShift()
+{
+  for (int i = length; i > 0; i--)
+  {
+    a[i] = a[i - 1];
+  }
+  a[0] = 0;
+  length++;
+}
+
+// Moves all elements one index to the left and
+// adds the first element to end of existing elements.
+void Array::leftRotate()
+{
+  int temp = a[0];
+  for (int i = 0; i < length - 1; i++)
+  {
+    a[i] = a[i + 1];
+  }
+  a[length - 1] = temp;
+}
+
+// Moves all elements one index to the right and
+// adds the last element to beginning of the array.
+void Array::rightRotate()
+{
+  int temp = a[length - 1];
+  for (int i = length - 1; i > 0; i--)
+  {
+    a[i] = a[i - 1];
+  }
+  a[0] = temp;
+}
+
 int main()
 {
   Array arr(10);
@@ -215,4 +295,23 @@ int main()
   std::cout << "Getting max " << arr.getMax() << std::endl;
   std::cout << "Getting sum " << arr.getSum() << std::endl;
   std::cout << "Getting average " << arr.getAverage() << std::endl;
+  arr.display();
+  std::cout << "Reversing!" << std::endl;
+  arr.reverseAtomic();
+  arr.display();
+  std::cout << "Reversing!" << std::endl;
+  arr.reverseInPlace();
+  arr.display();
+  std::cout << "leftShift!" << std::endl;
+  arr.leftShift();
+  arr.display();
+  std::cout << "rightShift!" << std::endl;
+  arr.rightShift();
+  arr.display();
+  std::cout << "leftRotate!" << std::endl;
+  arr.leftRotate();
+  arr.display();
+  std::cout << "rightRotate!" << std::endl;
+  arr.rightRotate();
+  arr.display();
 }
