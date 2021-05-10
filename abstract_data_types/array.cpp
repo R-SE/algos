@@ -2,6 +2,7 @@
 #include <limits>
 #include <vector>
 #include <algorithm>
+#include <time.h>
 
 class Array
 {
@@ -35,6 +36,8 @@ public:
   void quick_sort(int start, int end);
   void insertIntoSorted(int num);
   bool isSorted();
+  void negativesToLeft();
+  void randomize();
 
 private:
   int getMinOrMax(bool isMin);
@@ -379,8 +382,37 @@ void Array::insertIntoSorted(int num)
   length = length == size ? length : length + 1;
 }
 
+// Move all negatives to lefthand side, followed by all non-negative numbers.
+void Array::negativesToLeft()
+{
+  int i = -1;
+  int j = 0;
+  while (j < length)
+  {
+    if (a[j] < 0)
+    {
+      i++;
+      swap(i, j);
+    }
+    j++;
+  }
+}
+
+// Randomize the placement of all elements in the array.
+void Array::randomize()
+{
+  int i = 0;
+  while (i < length)
+  {
+    int random = rand() % (length - i) + i;
+    swap(i, random);
+    i++;
+  }
+}
+
 int main()
 {
+  srand(time(NULL));
   Array arr(10);
   arr.add(5);
   arr.display();
@@ -422,9 +454,16 @@ int main()
   arr.add(-3);
   arr.add(0);
   arr.display();
+  std::cout << "Sorting!" << std::endl;
   arr.sort();
   arr.display();
   arr.sort();
   arr.insertIntoSorted(7);
+  arr.display();
+  std::cout << "Randomizing!" << std::endl;
+  arr.randomize();
+  arr.display();
+  std::cout << "Moving negatives to left!" << std::endl;
+  arr.negativesToLeft();
   arr.display();
 }
