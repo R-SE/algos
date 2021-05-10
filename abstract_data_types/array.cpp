@@ -1,5 +1,7 @@
 #include <iostream>
 #include <limits>
+#include <vector>
+#include <algorithm>
 
 class Array
 {
@@ -27,6 +29,10 @@ public:
   void rightShift();
   void leftRotate();
   void rightRotate();
+  void swap(int idx1, int idx2);
+  int partition(int start, int end);
+  void sort();
+  void quick_sort(int start, int end);
 
 private:
   int getMinOrMax(bool isMin);
@@ -276,6 +282,75 @@ void Array::rightRotate()
   a[0] = temp;
 }
 
+void Array::swap(int idx1, int idx2)
+{
+  int temp = a[idx1];
+  a[idx1] = a[idx2];
+  a[idx2] = temp;
+}
+
+int Array::partition(int start, int end)
+{
+  int pivotValue = a[end];
+  int p1 = start - 1;
+  int p2 = start;
+  while (p2 < end)
+  {
+    if (a[p2] < pivotValue)
+    {
+      p1++;
+      swap(p1, p2);
+    }
+    p2++;
+  }
+  swap(p1 + 1, end);
+  return p1 + 1;
+}
+
+// Sort the array in place using quick sort.
+void Array::sort()
+{
+  // First check that we don't have a degenerate case
+  // where the array is already sorted or all the elements are same.
+  bool isAlreadySorted = true;
+  for (int i = 1; i < length; i++)
+  {
+    if (a[i] < a[i - 1])
+    {
+      isAlreadySorted = false;
+      continue;
+    }
+  }
+
+  if (isAlreadySorted)
+  {
+    return;
+  }
+
+  quick_sort(0, length - 1);
+}
+
+void Array::quick_sort(int start, int end)
+{
+  if (start >= end)
+  {
+    return;
+  }
+
+  if (end - start == 1)
+  {
+    if (a[start] > a[end])
+    {
+      swap(start, end);
+    }
+    return;
+  }
+
+  int pivot = partition(start, end);
+  quick_sort(start, pivot - 1);
+  quick_sort(pivot + 1, end);
+}
+
 int main()
 {
   Array arr(10);
@@ -314,4 +389,13 @@ int main()
   std::cout << "rightRotate!" << std::endl;
   arr.rightRotate();
   arr.display();
+  arr.add(9);
+  arr.add(-8);
+  arr.add(-3);
+  arr.add(0);
+  arr.add(1);
+  arr.display();
+  arr.sort();
+  arr.display();
+  arr.sort();
 }
