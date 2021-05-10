@@ -34,6 +34,7 @@ public:
   void sort();
   void quick_sort(int start, int end);
   void insertIntoSorted(int num);
+  bool isSorted();
 
 private:
   int getMinOrMax(bool isMin);
@@ -308,22 +309,25 @@ int Array::partition(int start, int end)
   return p1 + 1;
 }
 
+// Returns boolean representing if the array is sorted in ascending order.
+bool Array::isSorted()
+{
+  for (int i = 1; i < length; i++)
+  {
+    if (a[i] < a[i - 1])
+    {
+      return false;
+    }
+  }
+  return true;
+}
+
 // Sort the array in place using quick sort.
 void Array::sort()
 {
   // First check that we don't have a degenerate case
   // where the array is already sorted or all the elements are same.
-  bool isAlreadySorted = true;
-  for (int i = 1; i < length; i++)
-  {
-    if (a[i] < a[i - 1])
-    {
-      isAlreadySorted = false;
-      continue;
-    }
-  }
-
-  if (isAlreadySorted)
+  if (isSorted())
   {
     return;
   }
