@@ -33,6 +33,7 @@ public:
   int partition(int start, int end);
   void sort();
   void quick_sort(int start, int end);
+  void insertIntoSorted(int num);
 
 private:
   int getMinOrMax(bool isMin);
@@ -351,6 +352,29 @@ void Array::quick_sort(int start, int end)
   quick_sort(pivot + 1, end);
 }
 
+// Insert an element into a sorted array,
+// dropping the last element if array is full.
+void Array::insertIntoSorted(int num)
+{
+  // First check if num is larger than last element.
+  if (num >= a[length - 1])
+  {
+    add(num);
+    return;
+  }
+
+  int pointer = length == size ? length - 1 : length;
+  while (pointer > 0 && a[pointer - 1] > num)
+  {
+    a[pointer] = a[pointer - 1];
+    pointer--;
+  }
+
+  a[pointer] = num;
+
+  length = length == size ? length : length + 1;
+}
+
 int main()
 {
   Array arr(10);
@@ -359,7 +383,7 @@ int main()
   arr.add(6);
   arr.add(7);
   arr.add(8);
-  arr.add(9);
+  arr.add(11);
   arr.display();
   arr.insert(1, 2);
   arr.display();
@@ -393,9 +417,10 @@ int main()
   arr.add(-8);
   arr.add(-3);
   arr.add(0);
-  arr.add(1);
   arr.display();
   arr.sort();
   arr.display();
   arr.sort();
+  arr.insertIntoSorted(7);
+  arr.display();
 }
