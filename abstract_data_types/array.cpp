@@ -38,6 +38,9 @@ public:
   bool isSorted();
   void negativesToLeft();
   void randomize();
+  Array unionSet(const Array &arr);
+  Array intersectionSet(const Array &arr);
+  Array differenceSet(const Array &arr);
 
 private:
   int getMinOrMax(bool isMin);
@@ -410,6 +413,94 @@ void Array::randomize()
   }
 }
 
+/**
+ * Given another Array object, return a new Array object that has a set of the elements copied from both objects.
+*/
+Array Array::unionSet(const Array &arr)
+{
+  int merged_length = size + arr.length;
+  Array unionSet = Array(merged_length);
+  // First add all the elements from the first array.
+  for (int i = 0; i < length; i++)
+  {
+    unionSet.add(a[i]);
+  }
+
+  // Then for each element from the second array, first check if it's present in the first array.
+  // If not, add to the final array.
+  for (int j = 0; j < arr.length; j++)
+  {
+    bool is_duplicate = false;
+    for (int k = 0; k < length && !is_duplicate; k++)
+    {
+      if (arr.a[j] == unionSet.a[k])
+      {
+        is_duplicate = true;
+      }
+    }
+    if (!is_duplicate)
+    {
+      unionSet.add(arr.a[j]);
+    }
+  }
+
+  return unionSet;
+}
+
+/**
+ * Given another Array object, return a new Array object that contains only elements present in both objects.
+*/
+Array Array::intersectionSet(const Array &arr)
+{
+  int merged_length = length + arr.length;
+  Array intersectionSet = Array(merged_length);
+
+  for (int i = 0; i < length; i++)
+  {
+    int is_duplicate = false;
+    for (int j = 0; j < arr.length && !is_duplicate; j++)
+    {
+      if (arr.a[j] == a[i])
+      {
+        is_duplicate = true;
+      }
+    }
+    if (is_duplicate)
+    {
+      intersectionSet.add(a[i]);
+    }
+  }
+
+  return intersectionSet;
+}
+
+/**
+ * Given another Array object, return a new Array object that contains only elements present in the current Array object but not the Array object passed in the argument.
+*/
+Array Array::differenceSet(const Array &arr)
+{
+  int merged_length = length + arr.length;
+  Array differenceSet = Array(merged_length);
+
+  for (int i = 0; i < length; i++)
+  {
+    int is_duplicate = false;
+    for (int j = 0; j < arr.length && !is_duplicate; j++)
+    {
+      if (arr.a[j] == a[i])
+      {
+        is_duplicate = true;
+      }
+    }
+    if (!is_duplicate)
+    {
+      differenceSet.add(a[i]);
+    }
+  }
+
+  return differenceSet;
+}
+
 int main()
 {
   srand(time(NULL));
@@ -452,7 +543,6 @@ int main()
   arr.add(9);
   arr.add(-8);
   arr.add(-3);
-  arr.add(0);
   arr.display();
   std::cout << "Sorting!" << std::endl;
   arr.sort();
@@ -466,4 +556,26 @@ int main()
   std::cout << "Moving negatives to left!" << std::endl;
   arr.negativesToLeft();
   arr.display();
+
+  Array arr2(10);
+  arr2.add(6);
+  arr2.add(7);
+  arr2.add(-8);
+  arr2.add(0);
+  arr2.add(1);
+  arr2.add(-3);
+  arr2.add(-5);
+  arr2.add(12);
+  arr2.add(13);
+  arr.display();
+  arr2.display();
+  Array arr3 = arr.unionSet(arr2);
+  std::cout << "Union set!" << std::endl;
+  arr3.display();
+  Array arr4 = arr.intersectionSet(arr2);
+  std::cout << "Intersection set!" << std::endl;
+  arr4.display();
+  Array arr5 = arr.differenceSet(arr2);
+  std::cout << "Difference set!" << std::endl;
+  arr5.display();
 }
